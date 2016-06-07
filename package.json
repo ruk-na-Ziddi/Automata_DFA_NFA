@@ -1,0 +1,18 @@
+{
+  "name": "ankur",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha dfa_generatorTest.js nfa_generatorTest.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "lodash": "^4.13.1"
+  }
+}
