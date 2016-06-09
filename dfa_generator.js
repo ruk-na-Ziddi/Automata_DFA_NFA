@@ -15,16 +15,18 @@ dfa.prototype.accept = function(alphabets){
 };
 
 dfa.prototype.runner = function(alphabets){
-	if(this.badRequest(alphabets))
+	var self=this;
+	if(self.badRequest(alphabets))
 		return "bad state";
 	return alphabets.split("").reduce(function(initial_state, char){
-		return this.transition_function[initial_state][char];
-	}, this.initial_state);
+		return self.transition_function[initial_state][char];
+	}, self.initial_state);
 };
 
 dfa.prototype.badRequest = function(alphabets){
+	var alphabet_set=this.alphabet_set;
 	return alphabets.split("").some(function(ele){
-		return this.alphabet_set.indexOf(ele) == -1;
+		return alphabet_set.indexOf(ele) == -1;
 	});
 }
 
