@@ -56,11 +56,9 @@ nfa.prototype.continuousEplsonTransactions = function(states){
 
 nfa.prototype.alphabetTransactionOnStates = function(states, alphabet){
 	var _this=this;
-	var next_states_after_alphabet_transaction = [];
-	states.forEach(function(state){
-		next_states_after_alphabet_transaction.push(_this.transition_function[state][alphabet] || [])
+	return states.map(function(state){
+		return _this.transition_function[state][alphabet] || []
 	})
-	return lodash.flattenDeep(lodash.uniq(lodash.flattenDeep(next_states_after_alphabet_transaction)));
 }
 
 function isUndefined(element){ return element == undefined };
