@@ -44,10 +44,9 @@ nfa.prototype.badRequest = function(alphabets){
 
 nfa.prototype.continuousEplsonTransactions = function(states){
 	var _this = this;
-	var next_candidates = []
-	states.forEach(function(state){
+	var next_candidates = states.map(function(state){
 		isUndefined(_this.transition_function[state]) && (_this.transition_function[state] = {epslon_symbol:[]})
-		next_candidates.push(_this.transition_function[state][epslon_symbol] || [])
+		return _this.transition_function[state][epslon_symbol] || []
 	})
 	if(lodash.difference(lodash.flattenDeep(next_candidates), states).length == 0)
 		return states;
