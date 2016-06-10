@@ -30,8 +30,8 @@ nfa.prototype.runner = function(alphabets){
 
 	return alphabets.split("").reduce(function(states, alphabet){
 		var possible_states_of_machine = _this.continuousEplsonTransactions(states);
-		var states_after_epslon_transaction = _this.alphabetTransactionOnStates(possible_states_of_machine, alphabet);
-		return _this.continuousEplsonTransactions(states_after_epslon_transaction);
+		var states_after_alphabet_transaction = _this.alphabetTransactionOnStates(possible_states_of_machine, alphabet);
+		return _this.continuousEplsonTransactions(states_after_alphabet_transaction);
 	}, [_this.initial_state]);
 };
 
