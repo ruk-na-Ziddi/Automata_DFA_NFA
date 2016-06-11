@@ -16,7 +16,7 @@ var nfa_generator = function(set_of_states,alphabet_set, transition_function, in
 };
 
 nfa.prototype.accept = function(alphabets){
-	return lodash.intersection(this.set_of_final_states, lodash.flatten(this.runner(alphabets))).length >= 1;
+	return lodash.intersection(this.set_of_final_states, this.runner(alphabets)).length >= 1;
 };
 
 nfa.prototype.runner = function(alphabets){
