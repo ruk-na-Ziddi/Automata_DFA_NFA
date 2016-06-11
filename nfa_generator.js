@@ -60,9 +60,9 @@ nfa.prototype.possibleEpslonStates = function(states){
 
 nfa.prototype.alphabetTransactionOnStates = function(states, alphabet){
 	var _this=this;
-	return states.map(function(state){
+	return lodash.flattenDeep(states.map(function(state){
 		return _this.transition_function[state][alphabet] || []
-	})
+	}))
 }
 
 function isUndefined(element){ return element == undefined };
