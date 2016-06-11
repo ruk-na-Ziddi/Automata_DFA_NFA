@@ -45,17 +45,17 @@ nfa.prototype.badRequest = function(alphabets){
 nfa.prototype.continuousEplsonTransactions = function(states){
 	var _this = this;
 	var next_candidates = _this.possibleEpslonStates(states);
-	if(lodash.difference(lodash.flattenDeep(next_candidates), states).length == 0)
+	if(lodash.difference(next_candidates, states).length == 0)
 		return states;
-	return _this.continuousEplsonTransactions(lodash.union(states, lodash.flattenDeep(next_candidates)))
+	return _this.continuousEplsonTransactions(lodash.union(states, next_candidates))
 }
 
 nfa.prototype.possibleEpslonStates = function(states){
 	var _this = this;
-	return states.map(function(state){
+	return lodash.flattenDeep(states.map(function(state){
 		isUndefined(_this.transition_function[state]) && (_this.transition_function[state] = {epslon_symbol:[]})
 		return _this.transition_function[state][epslon_symbol] || []
-	})
+	}))
 }
 
 nfa.prototype.alphabetTransactionOnStates = function(states, alphabet){
