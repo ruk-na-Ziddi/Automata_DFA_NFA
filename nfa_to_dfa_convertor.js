@@ -56,9 +56,9 @@ var state_after_alphabet_transaction = function(transition_function, state, alph
 		return transition_function[each_state][alphabet] || []
 	})
 	// console.log("after_alphabet_transition==> ",lodash.flattenDeep(after_alphabet_transition).toString())
-	var next_epslon_states = possible_initial_state(transition_function, lodash.flattenDeep(after_alphabet_transition).toString(), possible_dfa_states);
+	return possible_initial_state(transition_function, lodash.flattenDeep(after_alphabet_transition).toString(), possible_dfa_states);
 	// console.log("next_epslon_states------>",next_epslon_states)
-	return equivalent_state(possible_dfa_states, next_epslon_states.toString());
+	// return equivalent_state(possible_dfa_states, next_epslon_states.toString());
 }
 
 var dfa_transition_function = function(transition_function, alphabet_set, possible_dfa_states){
