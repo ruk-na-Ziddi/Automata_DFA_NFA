@@ -1,6 +1,8 @@
 var assert = require('chai').assert;
 
 var nfa_to_dfa_convertor = require("./nfa_to_dfa_convertor.js").nfa_to_dfa_convertor;
+var nfa_generator = require("./nfa_generator.js").nfa_generator;
+
 
 describe('=======================> test for ./nfa_to_dfa_convertor.js', function() {
 
@@ -73,263 +75,63 @@ describe('=======================> test for ./nfa_to_dfa_convertor.js', function
     });
   });
 
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_101 accepts  strings  101', function () {
-	//     set_of_states = ["q1","q2","q3","q4"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":["q1","q2"], "ε":[]},
-	// 		"q2":{"0":["q3"], "1":[], "ε":[]},
-	// 		"q3":{"0":[], "1":["q4"], "ε":[]},
-	// 		"q4":{"0":[], "1":[], "ε":[]},
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q4"];
+ describe('nfa_to_dfa_convertor generates a equivalent dfa_with_even_1s_or_0s for nfa_with_even_1s_or_0s', function () {
+    it('dfa_with_even_1s_or_0s accepts all the strings accepted by nfa_with_even_1s_or_0s', function () {
+	    set_of_states=["q1","q2","q3","q4","q5"]
+		alphabet_set=["0","1"]
+		transition_function={
+			"q1":{"0":[], "1":[], "ε":["q2","q4"]},
+			"q2":{"0":["q3"], "1":["q2"], "ε":[]},
+			"q3":{"0":["q2"], "1":["q3"], "ε":[]},
+			"q4":{"0":["q4"], "1":["q5"], "ε":[]},
+			"q5":{"0":["q5"], "1":["q4"], "ε":[]}
+		}
+		initial_state="q1"
+		set_of_final_states=["q2","q4"]
 
- //      	var nfa_ends_with_101 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
+      	var nfa = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
+      	var dfa = nfa_to_dfa_convertor(set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states);
 
- //      	assert.equal(true, nfa_ends_with_101.accept("101"));
- //    });
- //  });
+      	assert.equal(true, nfa.accept("11"));
+      	assert.equal(true, dfa.accept("11"));
 
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_101 accepts  string 00101', function () {
-	//     set_of_states = ["q1","q2","q3","q4"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":["q1","q2"], "ε":[]},
-	// 		"q2":{"0":["q3"], "1":[], "ε":[]},
-	// 		"q3":{"0":[], "1":["q4"], "ε":[]},
-	// 		"q4":{"0":[], "1":[], "ε":[]},
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q4"];
+      	assert.equal(true, nfa.accept("00"));
+      	assert.equal(true, dfa.accept("00"));
 
- //      	var nfa_ends_with_101 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
+      	assert.equal(true, nfa.accept("100"));
+      	assert.equal(true, dfa.accept("100"));
 
- //      	assert.equal(true, nfa_ends_with_101.accept("00101"));
- //    });
- //  });
+      	assert.equal(true, nfa.accept("011"));
+      	assert.equal(true, dfa.accept("011"));
 
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_101 accepts  string 11101', function () {
-	//     set_of_states = ["q1","q2","q3","q4"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":["q1","q2"], "ε":[]},
-	// 		"q2":{"0":["q3"], "1":[], "ε":[]},
-	// 		"q3":{"0":[], "1":["q4"], "ε":[]},
-	// 		"q4":{"0":[], "1":[], "ε":[]},
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q4"];
+      	assert.equal(true, nfa.accept("0"));
+      	assert.equal(true, dfa.accept("0"));
+    });
+  });
 
- //      	var nfa_ends_with_101 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
+ describe('nfa_to_dfa_convertor generates a equivalent dfa_with_even_1s_or_0s for nfa_with_even_1s_or_0s', function () {
+    it('dfa_with_even_1s_or_0s rejects all the strings rejected by nfa_with_even_1s_or_0s', function () {
+	    set_of_states=["q1","q2","q3","q4","q5"]
+		alphabet_set=["0","1"]
+		transition_function={
+			"q1":{"0":[], "1":[], "ε":["q2","q4"]},
+			"q2":{"0":["q3"], "1":["q2"], "ε":[]},
+			"q3":{"0":["q2"], "1":["q3"], "ε":[]},
+			"q4":{"0":["q4"], "1":["q5"], "ε":[]},
+			"q5":{"0":["q5"], "1":["q4"], "ε":[]}
+		}
+		initial_state="q1"
+		set_of_final_states=["q2","q4"]
 
- //      	assert.equal(true, nfa_ends_with_101.accept("11101"));
- //    });
- //  });
+      	var nfa = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
+      	var dfa = nfa_to_dfa_convertor(set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states);
 
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_101 accepts  string 1100101', function () {
-	//     set_of_states = ["q1","q2","q3","q4"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":["q1","q2"], "ε":[]},
-	// 		"q2":{"0":["q3"], "1":[], "ε":[]},
-	// 		"q3":{"0":[], "1":["q4"], "ε":[]},
-	// 		"q4":{"0":[], "1":[], "ε":[]},
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q4"];
+      	assert.equal(false, nfa.accept("10"));
+      	assert.equal(false, dfa.accept("10"));
 
- //      	var nfa_ends_with_101 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
+      	assert.equal(false, nfa.accept("0100"));
+      	assert.equal(false, dfa.accept("0100"));
+    });
+  });
 
- //      	assert.equal(true, nfa_ends_with_101.accept("1100101"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_101 does not accept string 111', function () {
-	//     set_of_states = ["q1","q2","q3","q4"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":["q1","q2"], "ε":[]},
-	// 		"q2":{"0":["q3"], "1":[], "ε":[]},
-	// 		"q3":{"0":[], "1":["q4"], "ε":[]},
-	// 		"q4":{"0":[], "1":[], "ε":[]},
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q4"];
-
- //      	var nfa_ends_with_101 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(false, nfa_ends_with_101.accept("111"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_101 does not accept string 110', function () {
-	//     set_of_states = ["q1","q2","q3","q4"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":["q1","q2"], "ε":[]},
-	// 		"q2":{"0":["q3"], "1":[], "ε":[]},
-	// 		"q3":{"0":[], "1":["q4"], "ε":[]},
-	// 		"q4":{"0":[], "1":[], "ε":[]},
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q4"];
-
- //      	var nfa_ends_with_101 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(false, nfa_ends_with_101.accept("110"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_101 does not accept string 110110', function () {
-	//     set_of_states = ["q1","q2","q3","q4"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":["q1","q2"], "ε":[]},
-	// 		"q2":{"0":["q3"], "1":[], "ε":[]},
-	// 		"q3":{"0":[], "1":["q4"], "ε":[]},
-	// 		"q4":{"0":[], "1":[], "ε":[]},
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q4"];
-
- //      	var nfa_ends_with_101 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(false, nfa_ends_with_101.accept("110110"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_101 does not accept string 1111100', function () {
-	//     set_of_states = ["q1","q2","q3","q4"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":["q1","q2"], "ε":[]},
-	// 		"q2":{"0":["q3"], "1":[], "ε":[]},
-	// 		"q3":{"0":[], "1":["q4"], "ε":[]},
-	// 		"q4":{"0":[], "1":[], "ε":[]},
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q4"];
-
- //      	var nfa_ends_with_101 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(false, nfa_ends_with_101.accept("1111100"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_0 accept string 0', function () {
-	//     set_of_states = ["q1","q2","q3"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":[], "ε":["q2"]},
-	// 		"q2":{"0":["q3"], "1":["q2"], "ε":[]},
-	// 		"q3":{"0":[], "1":[], "ε":[]}
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q3"];
-
- //      	var nfa_ends_with_0 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(true, nfa_ends_with_0.accept("0"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_0 accept string 10', function () {
-	//     set_of_states = ["q1","q2","q3"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":[], "ε":["q2"]},
-	// 		"q2":{"0":["q3"], "1":["q2"], "ε":[]},
-	// 		"q3":{"0":[], "1":[], "ε":[]}
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q3"];
-
- //      	var nfa_ends_with_0 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(true, nfa_ends_with_0.accept("10"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_0 accept string 110', function () {
-	//     set_of_states = ["q1","q2","q3"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":[], "ε":["q2"]},
-	// 		"q2":{"0":["q3"], "1":["q2"], "ε":[]},
-	// 		"q3":{"0":[], "1":[], "ε":[]}
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q3"];
-
- //      	var nfa_ends_with_0 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(true, nfa_ends_with_0.accept("110"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_ends_with_0 accept string 0000', function () {
-	//     set_of_states = ["q1","q2","q3"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":[], "ε":["q2"]},
-	// 		"q2":{"0":["q3"], "1":["q2"], "ε":[]},
-	// 		"q3":{"0":[], "1":[], "ε":[]}
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q3"];
-
- //      	var nfa_ends_with_0 = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(true, nfa_ends_with_0.accept("0000"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_no_name accepts string 0', function () {
-	//     set_of_states = ["q1","q2","q3"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":[], "ε":["q2"]},
-	// 		"q2":{"0":[], "1":["q2"], "ε":["q3"]},
-	// 		"q3":{"0":[], "1":[], "ε":[]}
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q3"];
-
- //      	var nfa_no_name = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(true, nfa_no_name.accept("0"));
- //    });
- //  });
-
- //  describe('nfa.accept', function () {
- //    it('nfa_no_name accepts empty string', function () {
-	//     set_of_states = ["q1","q2","q3"];
-	// 	transition_function={
-	// 		"q1":{"0":["q1"], "1":[], "ε":["q2"]},
-	// 		"q2":{"0":[], "1":["q2"], "ε":["q3"]},
-	// 		"q3":{"0":[], "1":[], "ε":[]}
-	// 	}
-	// 	alphabet_set=["0","1"];
-	// 	initial_state = "q1";
-	// 	set_of_final_states = ["q3"];
-
- //      	var nfa_no_name = nfa_generator (set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states)
-
- //      	assert.equal(true, nfa_no_name.accept(""));
- //    });
- //  });
 });

@@ -1,7 +1,7 @@
 var lodash = require("lodash");
 
-var epslon_symbol = "e"
-// var epslon_symbol = "ε"
+// var epslon_symbol = "e"
+var epslon_symbol = "ε"
 
 var nfa = function(set_of_states, alphabet_set, transition_function, initial_state, set_of_final_states){
 	this.set_of_states = set_of_states;
