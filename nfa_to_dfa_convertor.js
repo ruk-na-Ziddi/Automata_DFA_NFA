@@ -65,7 +65,9 @@ var dfa_transition_function = function(transition_function, alphabet_set, possib
 	possible_dfa_states.forEach(function(state){
 		alphabet_set.forEach(function(alphabet){
 			dfa_transition_function[state] = dfa_transition_function[state] || {};
-			dfa_transition_function[state][alphabet] = alphabet_transaction(transition_function, state, alphabet, possible_dfa_states);
+			var epslon_state = state_with_epslon(transition_function, state, possible_dfa_states);
+			var alphabet_state = alphabet_transaction(transition_function, epslon_state, alphabet, possible_dfa_states);
+			dfa_transition_function[state][alphabet] = state_with_epslon(transition_function, alphabet_state, possible_dfa_states);
 		})
 	});
 	return dfa_transition_function;
