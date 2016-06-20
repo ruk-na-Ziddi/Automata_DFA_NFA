@@ -46,7 +46,7 @@ var equivalent_state = function(possible_dfa_states, returned_state){
 	}).toString();
 }
 
-var state_after_alphabet_transaction = function(transition_function, state, alphabet, possible_dfa_states){
+var alphabet_transaction = function(transition_function, state, alphabet, possible_dfa_states){
 	var states_after_alphabet = state.split(",").map(function(each_state){
 		transition_function[each_state] = transition_function[each_state] || {}
 		return transition_function[each_state][alphabet] || []
@@ -61,14 +61,14 @@ var fresh_collection = function(collection){
 }
 
 var dfa_transition_function = function(transition_function, alphabet_set, possible_dfa_states){
-	var transition_function_for_dfa = {};
-	possible_dfa_states.forEach(function(each_state){
-		alphabet_set.forEach(function(each_alphabet){
-			transition_function_for_dfa[each_state] = transition_function_for_dfa[each_state] || {};
-			transition_function_for_dfa[each_state][each_alphabet] = state_after_alphabet_transaction(transition_function, each_state, each_alphabet, possible_dfa_states);
+	var dfa_transition_function = {};
+	possible_dfa_states.forEach(function(state){
+		alphabet_set.forEach(function(alphabet){
+			dfa_transition_function[state] = dfa_transition_function[state] || {};
+			dfa_transition_function[state][alphabet] = alphabet_transaction(transition_function, state, alphabet, possible_dfa_states);
 		})
 	});
-	return transition_function_for_dfa;
+	return dfa_transition_function;
 }
 
 function isUndefined(element){ return element == undefined };
